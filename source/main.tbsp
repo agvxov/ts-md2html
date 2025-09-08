@@ -187,9 +187,15 @@ enter inline {
     char * t = tbget_text;
     sds rt = md_inline_to_html(t);
 
-    //ECHO( "<p>"); ECHO("\n");
-    ECHO(rt);
-    //ECHO("</p>"); ECHO("\n");
+    // XXX hack until tbsp supports `enter section->paragraph->inline`
+    if (!strcmp(ts_node_type(ts_node_parent(tbnode)), "paragraph")
+    &&  !strcmp(ts_node_type(ts_node_parent(ts_node_parent(tbnode))), "section") ) {
+        ECHO("\n<p>\n");
+        ECHO(rt);
+        ECHO("\n</p>\n");
+    } else {
+        ECHO(rt);
+    }
 
     sdsfree(rt);
     free(t);
