@@ -72,7 +72,7 @@
         the output document or its structure.
     */
     static
-    char * md_inline_to_html(const char * const input) {
+    sds md_inline_to_html(const char * const input) {
         const char * quote       = "^\\s*>";
         const char * bold_a      = "\\*\\*(.*?)\\*\\*";
         const char * bold_u      = "__(.*?)__";
