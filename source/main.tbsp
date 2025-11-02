@@ -2,6 +2,7 @@
     #include <stdio.h>
     #include <pcre.h>
     #include "sds.h"
+    #include "slurp.h"
 
     int heading_level;
 
@@ -298,17 +299,6 @@ void usage(void) {
     );
 }
 
-/* XXX: an input file could very well be larger than the stack limit
-*/
-#define READ_ENTIRE_FILE(filehandle, buffername) \
-	fseek(filehandle, 0, SEEK_END); \
-	int filehandle ## len = ftell(filehandle); \
-	rewind(filehandle); \
-	char buffername[filehandle ## len+1]; \
-	buffername[filehandle ## len] = '\00'; \
-	fread(buffername, filehandle ## len, sizeof(char), filehandle); \
-    fclose(filehandle);
-
 signed main(int argc, char * argv[]) {
     // Init
     const char * out_file = NULL;
@@ -352,16 +342,12 @@ signed main(int argc, char * argv[]) {
         out_handle = stdout;
     }
 
-	FILE* in_handle = fopen(in_file, "r");
-	if(!in_handle){
-        fputs("Failed to open input file.\n", stderr);
-        return 1;
-    }
+    char * in_str = read_file(in_file);
+    if (!in_str) { return 1; }
 
-    READ_ENTIRE_FILE(in_handle, in_str);
-
-    // IoC
     tbtraverse(in_str);
+
+    free(in_str);
 
     return 0;
 }

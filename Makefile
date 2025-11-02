@@ -1,4 +1,4 @@
-CFLAGS  := -Isource/ -Ilibrary/
+CFLAGS  := -D_GNU_SOURCE -Isource/ -Ilibrary/ -std=c23
 LDFLAGS := -ltree-sitter -ltree-sitter-markdown -lpcre
 
 OUT := ts-md2html
@@ -24,6 +24,7 @@ main: source/main.tbsp
 
 test:
 	ts-md2html test/max.md
+	echo '# test' | ts-md2html /dev/stdin
 
 clean:
 	-${RM} object/*.c
