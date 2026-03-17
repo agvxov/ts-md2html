@@ -244,8 +244,8 @@ leave list { echo_list_tail(); }
 enter thematic_break { ECHO("<hr/>"); }
 
 // --- Code ---
-enter fenced_code_block { ECHO( "<code>"); inc_indent();   }
-leave fenced_code_block { dec_indent(); ECHO("</code>\n"); }
+enter fenced_code_block { ECHO( "<pre><code>"); inc_indent();   }
+leave fenced_code_block { dec_indent(); ECHO("</code></pre>\n"); }
 
 enter code_fence_content {
     char * t = tbget_text;
@@ -259,9 +259,9 @@ enter code_fence_content {
 enter indented_code_block {
     char * t = tbget_text;
 
-    ECHO( "<code>"); inc_indent();
+    ECHO( "<pre><code>"); inc_indent();
     ECHO(t);
-    dec_indent(); ECHO("</code>\n");
+    dec_indent(); ECHO("</code></pre>\n");
 
     free(t);
 }
