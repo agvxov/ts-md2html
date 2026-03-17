@@ -204,12 +204,12 @@ enter inline {
 
 // --- Headings
 // > (atx_heading (atx_h${N}_marker) heading_content: (inline))
-enter atx_h1_marker { ECHO( "<h1>"); heading_level = 1; }
-enter atx_h2_marker { ECHO( "<h2>"); heading_level = 2; }
-enter atx_h3_marker { ECHO( "<h3>"); heading_level = 3; }
-enter atx_h4_marker { ECHO( "<h4>"); heading_level = 4; }
-enter atx_h5_marker { ECHO( "<h5>"); heading_level = 5; }
-enter atx_h6_marker { ECHO( "<h6>"); heading_level = 6; }
+enter atx_h1_marker { ECHO("<h1>"); heading_level = 1; }
+enter atx_h2_marker { ECHO("<h2>"); heading_level = 2; }
+enter atx_h3_marker { ECHO("<h3>"); heading_level = 3; }
+enter atx_h4_marker { ECHO("<h4>"); heading_level = 4; }
+enter atx_h5_marker { ECHO("<h5>"); heading_level = 5; }
+enter atx_h6_marker { ECHO("<h6>"); heading_level = 6; }
 
 leave atx_heading {
     char head_end[] = "</hN>";
@@ -220,7 +220,7 @@ leave atx_heading {
 }
 
 // --- Quotes ---
-enter block_quote { ECHO( "<blockquote>"); inc_indent();   }
+enter block_quote { ECHO("<blockquote>"); inc_indent();   }
 leave block_quote { dec_indent(); ECHO("</blockquote>\n"); }
 
 // --- Lists ---
@@ -244,7 +244,7 @@ leave list { echo_list_tail(); }
 enter thematic_break { ECHO("<hr/>"); }
 
 // --- Code ---
-enter fenced_code_block { ECHO( "<pre><code>"); inc_indent();   }
+enter fenced_code_block { ECHO("<pre><code>"); inc_indent();   }
 leave fenced_code_block { dec_indent(); ECHO("</code></pre>\n"); }
 
 enter code_fence_content {
@@ -259,7 +259,7 @@ enter code_fence_content {
 enter indented_code_block {
     char * t = tbget_text;
 
-    ECHO( "<pre><code>"); inc_indent();
+    ECHO("<pre><code>"); inc_indent();
     ECHO(t);
     dec_indent(); ECHO("</code></pre>\n");
 
@@ -268,16 +268,16 @@ enter indented_code_block {
 
 
 // --- Tables ---
-enter pipe_table { ECHO(" <table>"); inc_indent();   }
+enter pipe_table { ECHO("<table>"); inc_indent();   }
 leave pipe_table { dec_indent(); ECHO("</table>\n"); }
 
-enter pipe_table_row { ECHO( "<tr>"); inc_indent();   }
+enter pipe_table_row { ECHO("<tr>"); inc_indent();   }
 leave pipe_table_row { dec_indent(); ECHO("</tr>\n"); }
 
 enter pipe_table_cell {
     char * t = tbget_text;
 
-    ECHO( "<td>"); inc_indent();
+    ECHO("<td>"); inc_indent();
     ECHO(t);
     dec_indent(); ECHO("\n</td>\n");
 
